@@ -7,10 +7,14 @@ const price = ref(0)
 const selectedMenus = reactive([])
 
 const filters = reactive([
-
   {
-    category: 'שעות עבודה',
-    subCategory: [{ name: 'עבודה בסיסית' }, { name: 'עבודה אמנותית' }, { name: 'עבודה מורכבת' }]
+    category: 'עלויות כלליות',
+    subCategory: [
+      { name: 'זמן עבודה כללי' },
+      { name: 'משלוח' },
+      { name: 'עובדים' },
+      { name: 'שונות' }
+    ]
   }
 ])
 const selectedCategorySubcategories = computed(() => {
@@ -36,8 +40,8 @@ const addNewMenu = () => {
 </script>
     
 <template>
-  <div class="stage3">
-    <h2>שלב 3 זמן עבודה</h2>
+  <div class="stage4">
+<h2> שלב 4 עלויות כלליות</h2>
     <select v-model="selectedCategory" class="strawberry-pink-bg">
       <option disabled value="" class="rose-red-text">בחר אחת מהקטגוריות</option>
       <option v-for="(category, index) in filters" :key="index" :value="category.category" class="rose-red-text">

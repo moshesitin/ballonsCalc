@@ -1,5 +1,5 @@
     <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, defineProps, defineEmits  } from 'vue'
 const selectedCategory = ref(null)
 const selectedSubcategory = ref(null)
 const selectedType = ref(null)
@@ -7,6 +7,8 @@ const selectedTypes = reactive([])
 const quantity = ref(0)
 const price = ref(0)
 const selectedMenus = reactive([])
+
+const emit = defineEmits(['update-menu'])
 
 const filters = reactive([
   {
@@ -166,6 +168,7 @@ const addNewMenu = () => {
   //   price.value = 0 // Обнулите цену
   // }
 }
+emit('update-menu', selectedMenus)
 const addNewMenuSub = () => {
   if (!selectedSubcategoryTypes.value) {
     addNewMenu()
@@ -177,6 +180,7 @@ selectedType.value = null
     
 <template>
   <div class="stage2">
+    <h2>שלב 2 בחר חומרים</h2>
     <select v-model="selectedCategory" class="strawberry-pink-bg">
       <option disabled value="" class="rose-red-text">בחר אחת מהקטגוריות</option>
       <option v-for="(category, index) in filters" :key="index" :value="category.category" class="rose-red-text">
