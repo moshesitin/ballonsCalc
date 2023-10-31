@@ -1,13 +1,14 @@
     <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, defineEmits } from 'vue'
 const selectedCategory = ref(null)
 const selectedSubcategory = ref(null)
 const quantity = ref(0)
 const price = ref(0)
 const selectedMenus = reactive([])
 
-const filters = reactive([
+const emit = defineEmits(['update-menu'])
 
+const filters = reactive([
   {
     category: 'שעות עבודה',
     subCategory: [{ name: 'עבודה בסיסית' }, { name: 'עבודה אמנותית' }, { name: 'עבודה מורכבת' }]
@@ -32,7 +33,9 @@ const addNewMenu = () => {
     quantity.value = 0
     price.value = 0
   }
-  }
+}
+
+emit('update-menu', selectedMenus)
 </script>
     
 <template>
@@ -40,7 +43,12 @@ const addNewMenu = () => {
     <h2>שלב 3 זמן עבודה</h2>
     <select v-model="selectedCategory" class="strawberry-pink-bg">
       <option disabled value="" class="rose-red-text">בחר אחת מהקטגוריות</option>
-      <option v-for="(category, index) in filters" :key="index" :value="category.category" class="rose-red-text">
+      <option
+        v-for="(category, index) in filters"
+        :key="index"
+        :value="category.category"
+        class="rose-red-text"
+      >
         {{ category.category }}
       </option>
     </select>
@@ -63,26 +71,37 @@ const addNewMenu = () => {
     </select>
 
     <div v-for="(menu, index) in selectedMenus" :key="index" class="additional-fields">
-      <div class="additional-info">{{ menu.subcategory }} {{ menu.type }}</div>
-      <div class="input-field">
-        <label for="quantity">כמות</label>
-        <input
-          id="quantity"
-          type="number"
-          v-model="menu.quantity"
-          placeholder="כמות"
-          class="strawberry-pink-bg"
-        />
-      </div>
-      <div class="input-field">
-        <label for="price">מחיר ליחידה</label>
-        <input
-          id="price"
-          type="number"
-          v-model="menu.price"
-          placeholder="מחיר ליחידה"
-          class="strawberry-pink-bg"
-        />
+      <div class="menu-container">
+        <button
+          @click="
+            () => {
+              selectedMenus.splice(index, 1)
+            }
+          "
+        >
+          הסר
+        </button>
+        <div class="additional-info">{{ menu.subcategory }} {{ menu.type }}</div>
+        <div class="input-field">
+          <label for="quantity">כמות</label>
+          <input
+            id="quantity"
+            type="number"
+            v-model="menu.quantity"
+            placeholder="כמות"
+            class="strawberry-pink-bg"
+          />
+        </div>
+        <div class="input-field">
+          <label for="price">מחיר ליחידה</label>
+          <input
+            id="price"
+            type="number"
+            v-model="menu.price"
+            placeholder="מחיר ליחידה"
+            class="strawberry-pink-bg"
+          />
+        </div>
       </div>
     </div>
   </div>

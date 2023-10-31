@@ -1,5 +1,5 @@
     <script setup>
-import { ref, reactive, computed, defineProps, defineEmits  } from 'vue'
+import { ref, reactive, computed, defineProps, defineEmits } from 'vue'
 const selectedCategory = ref(null)
 const selectedSubcategory = ref(null)
 const selectedType = ref(null)
@@ -106,19 +106,19 @@ const filters = reactive([
       }
     ]
   },
-  {
-    category: 'שעות עבודה',
-    subCategory: [{ name: 'עבודה בסיסית' }, { name: 'עבודה אמנותית' }, { name: 'עבודה מורכבת' }]
-  },
-  {
-    category: 'עלויות כלליות',
-    subCategory: [
-      { name: 'זמן עבודה כללי' },
-      { name: 'משלוח' },
-      { name: 'עובדים' },
-      { name: 'שונות' }
-    ]
-  }
+  // {
+  //   category: 'שעות עבודה',
+  //   subCategory: [{ name: 'עבודה בסיסית' }, { name: 'עבודה אמנותית' }, { name: 'עבודה מורכבת' }]
+  // },
+  // {
+  //   category: 'עלויות כלליות',
+  //   subCategory: [
+  //     { name: 'זמן עבודה כללי' },
+  //     { name: 'משלוח' },
+  //     { name: 'עובדים' },
+  //     { name: 'שונות' }
+  //   ]
+  // }
 ])
 const selectedCategorySubcategories = computed(() => {
   // selectedCategorySubcategories in return contains array with names of subcategorys
@@ -183,7 +183,12 @@ selectedType.value = null
     <h2>שלב 2 בחר חומרים</h2>
     <select v-model="selectedCategory" class="strawberry-pink-bg">
       <option disabled value="" class="rose-red-text">בחר אחת מהקטגוריות</option>
-      <option v-for="(category, index) in filters" :key="index" :value="category.category" class="rose-red-text">
+      <option
+        v-for="(category, index) in filters"
+        :key="index"
+        :value="category.category"
+        class="rose-red-text"
+      >
         {{ category.category }}
       </option>
     </select>
@@ -212,39 +217,63 @@ selectedType.value = null
       class="strawberry-pink-bg"
     >
       <option disabled value="" class="rose-red-text">בחר סוג</option>
-      <option v-for="(type, index) in selectedSubcategoryTypes" :key="index" :value="type" class="rose-red-text">
+      <option
+        v-for="(type, index) in selectedSubcategoryTypes"
+        :key="index"
+        :value="type"
+        class="rose-red-text"
+      >
         {{ type }}
       </option>
     </select>
 
     <div v-for="(menu, index) in selectedMenus" :key="index" class="additional-fields">
-      <div class="additional-info">{{ menu.subcategory }} {{ menu.type }}</div>
-      <div class="input-field">
-        <label for="quantity">כמות</label>
-        <input
-          id="quantity"
-          type="number"
-          v-model="menu.quantity"
-          placeholder="כמות"
-          class="strawberry-pink-bg"
-        />
+      <div class="menu-container">
+        <button
+          @click="
+            () => {
+              selectedMenus.splice(index, 1)
+            }
+          "
+        >
+          הסר
+        </button>
+        <div class="additional-info">{{ menu.subcategory }} {{ menu.type }}</div>
+        <div class="input-field">
+          <label for="quantity">כמות</label>
+          <input
+            id="quantity"
+            type="number"
+            v-model="menu.quantity"
+            placeholder="כמות"
+            class="strawberry-pink-bg"
+          />
+        </div>
+        <div class="input-field">
+          <label for="price">מחיר ליחידה</label>
+          <input
+            id="price"
+            type="number"
+            v-model="menu.price"
+            placeholder="מחיר ליחידה"
+            class="strawberry-pink-bg"
+          />
+        </div>
+        <select
+          v-model="selectedTypes[index]"
+          @change="(event) => (menu.type = event.target.value)"
+        >
+          <option disabled value="" class="rose-red-text">שנה סוג</option>
+          <option
+            v-for="(type, index) in selectedSubcategoryTypes"
+            :key="index"
+            :value="type"
+            class="rose-red-text"
+          >
+            {{ type }}
+          </option>
+        </select>
       </div>
-      <div class="input-field">
-        <label for="price">מחיר ליחידה</label>
-        <input
-          id="price"
-          type="number"
-          v-model="menu.price"
-          placeholder="מחיר ליחידה"
-          class="strawberry-pink-bg"
-        />
-      </div>
-      <select v-model="selectedTypes[index]" @change="(event) => (menu.type = event.target.value)">
-        <option disabled value="" class="rose-red-text">שנה סוג</option>
-        <option v-for="(type, index) in selectedSubcategoryTypes" :key="index" :value="type" class="rose-red-text">
-          {{ type }}
-        </option>
-      </select>
     </div>
   </div>
 </template>
