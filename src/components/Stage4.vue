@@ -1,7 +1,6 @@
     <script setup>
-import { ref, reactive, computed, defineEmits } from 'vue'
-const selectedCategory = ref(null)
-const selectedSubcategory = ref(null)
+import { ref, reactive, defineEmits } from 'vue'
+const selectedType = ref(null)
 const quantity = ref(0)
 const price = ref(0)
 const selectedMenus = reactive([])
@@ -9,35 +8,22 @@ const selectedMenus = reactive([])
 const emit = defineEmits(['update-menu'])
 
 const filters = reactive([
-  {
-    category: 'עלויות כלליות',
-    subCategory: [
       { name: 'זמן עבודה כללי' },
       { name: 'משלוח' },
       { name: 'עובדים' },
       { name: 'שונות' }
-    ]
-  }
 ])
-const selectedCategorySubcategories = computed(() => {
-  // selectedCategorySubcategories in return contains array with names of subcategorys
-  const category = filters.find((item) => item.category === selectedCategory.value)
-  return category ? category.subCategory.map((sub) => sub.name) : []
-})
 
 const addNewMenu = () => {
   // create info for menu
-
-  if (selectedCategory && selectedSubcategory) {
     const menu = {
-      subcategory: selectedSubcategory.value,
+      type: selectedType.value,
       quantity: quantity.value,
       price: price.value
     }
     selectedMenus.push(menu)
     quantity.value = 0
     price.value = 0
-  }
 }
 
 emit('update-menu', selectedMenus)
@@ -46,32 +32,19 @@ emit('update-menu', selectedMenus)
 <template>
   <div class="stage4">
     <h2>שלב 4 עלויות כלליות</h2>
-    <select v-model="selectedCategory" class="strawberry-pink-bg">
-      <option disabled value="" class="rose-red-text">בחר אחת מהקטגוריות</option>
-      <option
-        v-for="(category, index) in filters"
-        :key="index"
-        :value="category.category"
-        class="rose-red-text"
-      >
-        {{ category.category }}
-      </option>
-    </select>
-
     <select
-      v-model="selectedSubcategory"
-      v-if="selectedCategory"
+      v-model="selectedType"
       @change="addNewMenu"
       class="strawberry-pink-bg"
     >
-      <option disabled value="" class="rose-red-text">בחר תתקטגוריה</option>
+      <option disabled value="" class="rose-red-text">בחר סוג</option>
       <option
-        v-for="(subcategory, index) in selectedCategorySubcategories"
+        v-for="(type, index) in filters"
         :key="index"
-        :value="subcategory"
+        :value="type.name"
         class="rose-red-text"
       >
-        {{ subcategory }}
+        {{ type.name }}
       </option>
     </select>
 
@@ -86,7 +59,7 @@ emit('update-menu', selectedMenus)
         >
           הסר
         </button>
-        <div class="additional-info">{{ menu.subcategory }} {{ menu.type }}</div>
+        <div class="additional-info">{{ menu.type }}</div>
         <div class="input-field">
           <label for="quantity">כמות</label>
           <input
