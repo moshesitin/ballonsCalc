@@ -24,6 +24,7 @@ const selectedPercent = ref(10)
       <input type="file" accept="image/*" @change="onFileChange"/>
     </form>
     <div class="percent-slider">
+      <label for="percentSlider">אחוז סתייה</label>
       <input type="range" id="percentSlider" min="0" max="100" step="1" v-model="selectedPercent" />
       <div id="selectedPercent">{{ selectedPercent }}%</div>
     </div>

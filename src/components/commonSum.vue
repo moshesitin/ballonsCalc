@@ -40,17 +40,17 @@ const sumPrice = computed(() => {
     
 <template>
   <div class="sum-wrapper">
-    <h2>חלון סיכום</h2>
+    <h2> {{`חלון סיכום ${props.GenMenu ? " " : "לא"} כולל עלויות כלליות`}} </h2>
     <div class="container">
       <div class="general-sum">
-        {{ `סך הכל ליחידה (לא כולל עלויות כלליות):₪${sumPrice.sum}` }}
+        {{ `סך הכל ליחידה :₪${sumPrice.sum}` }}
       </div>
       <div class="other-profits">
         <div>
-          {{ `רווח באחוזים: %${sumPrice.profitInPrcnt ? sumPrice.profitInPrcnt : 0} ` }}
+          {{ `רווח באחוזים: %${sumPrice.profitInPrcnt ? sumPrice.profitInPrcnt.toFixed(2) : 0} ` }}
         </div>
         <div>
-          {{ `רווח באחוזים אחרי הנחה: %${sumPrice.profitAfterDiscountInPrcnt ? sumPrice.profitAfterDiscountInPrcnt : 0} `}}
+          {{ `רווח באחוזים אחרי הנחה: %${sumPrice.profitAfterDiscountInPrcnt ? sumPrice.profitAfterDiscountInPrcnt.toFixed(2) : 0} `}}
         </div>
       </div>
       <div class="other-profits">
@@ -58,7 +58,7 @@ const sumPrice = computed(() => {
           {{ `רווח בש"ח: ₪${sumPrice.Worksum ? sumPrice.Worksum : 0} ` }}
         </div>
         <div>
-          {{ ` רווח בש"ח אחרי הנחה: ₪${sumPrice.profitAfterDiscountInNis ? sumPrice.profitAfterDiscountInNis : 0}` }}
+          {{ ` רווח בש"ח אחרי הנחה: ₪${sumPrice.profitAfterDiscountInNis ? sumPrice.profitAfterDiscountInNis.toFixed(2) : 0}` }}
         </div>
       </div>
     </div>

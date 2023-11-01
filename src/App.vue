@@ -25,7 +25,7 @@ const updateGeneralCostsMenu = (newMenu) => {
 
 <template>
   <div class="wrapper">
-    <h1>מחשבון תמכור</h1>
+    <h1>מחשבון תמחור</h1>
     <Stage1 />
     <Stage2 @update-menu="updateMatherialMenu" />
     <Stage3 @update-menu="updateWorkMenu" />
@@ -34,6 +34,7 @@ const updateGeneralCostsMenu = (newMenu) => {
     <commonSum :MathMenu="MathMenu" :WorkMenu="WorkMenu" :GenMenu="GenMenu" :discountPercent="discountPercent" />
 
     <div class="discount-slider">
+      <label for="discountSlider">אחוז הנחה</label>
       <input type="range" id="discountSlider" min="0" max="100" step="1" v-model="discountPercent" />
       <div id="discountPercent">{{ discountPercent }}%</div>
     </div>

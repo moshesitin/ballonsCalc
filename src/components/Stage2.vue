@@ -154,19 +154,6 @@ const addNewMenu = () => {
     quantity.value = 0
     price.value = 0
   }
-
-  // if (selectedCategory && selectedSubcategory) {
-  //   selectedMenus.push({
-  //     subcategory: selectedSubcategory,
-  //     type: selectedType.value, // Обновите эту строку
-  //     quantity: quantity.value, // Обновите эту строку
-  //     price: price.value // Обновите эту строку
-  //   })
-  //   selectedTypes.push(selectedType.value) // Добавьте выбранный тип в массив
-  //   selectedType.value = null // Обнулите выбранный тип
-  //   quantity.value = 0 // Обнулите количество
-  //   price.value = 0 // Обнулите цену
-  // }
 }
 emit('update-menu', selectedMenus)
 const addNewMenuSub = () => {
